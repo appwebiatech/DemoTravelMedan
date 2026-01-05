@@ -1327,12 +1327,12 @@ Nikmati perjalanan yang nyaman dan aman.  Cocok untuk perjalanan keluarga, rombo
                     <div class="contact-info-item"><i class="fas fa-map-marker-alt"></i><div><h4 data-i18n="label_address">Alamat</h4><p>Jl. Veteran Ps V, Kec labuhan Deli. Kabupaten Deli serdang, Medan, Indonesia</p></div></div>
                     <div class="contact-info-item"><i class="fas fa-phone"></i><div><h4 data-i18n="label_phone">Telepon / WA</h4><p>+62 852 6095 4651</p></div></div>
                 </div>
-                <form action="#">
-                    <input type="text" class="form-control" placeholder="Nama Lengkap" data-i18n-placeholder="ph_name">
-                    <input type="email" class="form-control" placeholder="Alamat Email" data-i18n-placeholder="ph_email">
-                    <textarea class="form-control" rows="5" placeholder="Pesan Anda..." data-i18n-placeholder="ph_message"></textarea>
-                    <button type="submit" class="btn btn-gold" style="width:100%;" data-i18n="btn_send_msg">Kirim Pesan</button>
-                </form>
+<form id="contactForm">
+    <input type="text" id="contactName" class="form-control" placeholder="Nama Lengkap" data-i18n-placeholder="ph_name" required>
+    <input type="email" id="contactEmail" class="form-control" placeholder="Alamat Email" data-i18n-placeholder="ph_email" required>
+    <textarea id="contactMessage" class="form-control" rows="5" placeholder="Pesan Anda..." data-i18n-placeholder="ph_message" required></textarea>
+    <button type="submit" class="btn btn-gold" style="width:100%;" data-i18n="btn_send_msg">Kirim Pesan</button>
+</form>
             </div>
         </div>
     </section>
@@ -2599,6 +2599,28 @@ card_tobasembilan_list: "",
             return false;
         }
     });
+    // --- LOGIKA FORM CONTACT KE WHATSAPP ---
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah halaman refresh otomatis
+
+            // 1. Ambil data dari input
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            // 2. Format pesan WhatsApp
+            // %0A adalah kode untuk baris baru (enter)
+            const waNumber = "6285260954651"; // Nomor Admin Anda
+            const text = `Halo Admin Daulay_TravelMedan,%0A%0ASaya ingin bertanya melalui form website.%0A%0A*Nama:* ${name}%0A*Email:* ${email}%0A*Pesan:* ${message}`;
+
+            // 3. Buka Link WhatsApp
+            const url = `https://wa.me/${waNumber}?text=${text}`;
+            window.open(url, '_blank');
+        });
+    }
 </script>
 </body>
-                        </html>
+</html>
