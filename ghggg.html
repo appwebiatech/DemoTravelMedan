@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daulay_TravelMedan - Travel Partner</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS SETUP --- */
+        :root {
+            --primary: #0F172A; --secondary: #334155; --accent: #C5A059; --accent-hover: #b08d4a; 
+            --light: #F8FAFC; --white: #ffffff; --shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+            --header-height: 90px; 
+            --wa-color: #25D366; --direct-color: #0ea5e9;
+            --success: #10B981; --error: #EF4444; --warning: #F59E0B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--secondary); background-color: var(--light); line-height: 1.7; overflow-x: hidden; }
+        
+        h1 { font-family: 'Playfair Display', serif; color: var(--primary); line-height: 1.2; font-size: clamp(2.5rem, 5vw, 3.5rem); }
+        h2 { font-family: 'Playfair Display', serif; color: var(--primary); line-height: 1.2; font-size: clamp(2rem, 4vw, 2.5rem); }
+        h3 { font-family: 'Playfair Display', serif; color: var(--primary); line-height: 1.2; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { max-width: 100%; display: block; height: auto; }
+        ul { list-style: none; }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; background: var(--accent); color: var(--white); font-weight: 600; border-radius: 12px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3); border: 1px solid transparent; cursor: pointer; font-size: 0.95rem; text-align: center; white-space: nowrap; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn-wa { background-color: var(--wa-color); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); } .btn-wa:hover { background-color: #1ebc57; }
+        .btn-web { background-color: var(--primary); box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3); } .btn-web:hover { background-color: #1e293b; }
+        .btn-direct { background-color: var(--direct-color); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); } .btn-direct:hover { background-color: #0284c7; }
+        .btn-gold { background-color: var(--accent); } .btn-gold:hover { background-color: var(--accent-hover); }
+        .btn-sm { padding: 10px 20px; font-size: 0.9rem; margin-top: 15px; width: 100%; border-radius: 50px; }
+        .btn-outline { background: transparent; border: 2px solid var(--white); box-shadow: none; } .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+        /* LAYOUT & SECTIONS */
+        .section-header { text-align: center; margin-bottom: 50px; padding: 0 10px; }
+        .section-header h2 { margin-bottom: 16px; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; display: block; width: 60px; height: 3px; background: var(--accent); margin: 10px auto 0; }
+        .section-header p { max-width: 600px; margin: 0 auto; color: #64748B; font-size: 1rem;}
+        section { padding: 80px 0; }
+        .text-white h2, .text-white p { color: var(--white); } .text-white p { color: #cbd5e1; }
+
+        /* --- NAVBAR & LOGO STYLING (PREMIUM VERSION) --- */
+        header { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.1); /* Transparan awal */
+            backdrop-filter: blur(15px); /* Efek blur kaca */
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            height: var(--header-height); 
+            display: flex; 
+            align-items: center; 
+            transition: all 0.4s ease; 
+        }
+
+        /* Class ini akan ditambahkan via JS saat scroll */
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-bottom: none;
+        }
+
+        .nav-wrapper { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+            height: 100%;
+        }
+        
+        /* LOGO AREA */
+        .brand-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            text-decoration: none; 
+            height: 100%;
+        }
+        
+        .brand-logo-img { 
+            height: 50px; 
+            width: 50px; 
+            object-fit: cover; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent);
+            padding: 2px;
+            background: white;
+            transition: 0.3s;
+        } 
+        
+        .brand-text { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+            display: flex; 
+            flex-direction: column; 
+            line-height: 1.1; 
+        }
+        
+        .brand-text span { color: var(--accent); }
+        .brand-text small { 
+            font-size: 0.6rem; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #64748B; 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* MENU LINKS */
+        .nav-links { display: flex; gap: 30px; align-items: center; margin: 0; padding: 0; }
+        .nav-links li { list-style: none; }
+        .nav-links a { 
+            font-weight: 500; 
+            font-size: 0.95rem; 
+            color: var(--primary); 
+            position: relative; 
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        .nav-links a::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 2px; 
+            bottom: 0; 
+            left: 0; 
+            background-color: var(--accent); 
+            transition: width 0.3s ease-in-out; 
+        }
+        .nav-links a:hover { color: var(--accent); } 
+        .nav-links a:hover::after { width: 100%; }
+
+        /* LANGUAGE SELECTOR - Lebih Minimalis */
+        .lang-select-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .lang-select { 
+            appearance: none; 
+            -webkit-appearance: none;
+            padding: 6px 15px; 
+            border-radius: 50px; 
+            border: 1px solid #e2e8f0; 
+            background: white; 
+            color: var(--primary); 
+            font-weight: 600; 
+            cursor: pointer; 
+            outline: none; 
+            font-size: 0.85rem; 
+            transition: 0.3s;
+            padding-right: 30px; /* Space for arrow */
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23C5A059%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px;
+        }
+        .lang-select:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+        /* HAMBURGER MENU (MOBILE) */
+        .hamburger { display: none; font-size: 24px; cursor: pointer; color: var(--primary); padding: 5px; }
+        
+        /* RESPONSIVE TABLET & MOBILE */
+        @media (max-width: 960px) {
+            .nav-links { 
+                position: fixed; 
+                top: 0; 
+                right: -100%; /* Sembunyi di kanan */
+                width: 280px; 
+                height: 100vh; 
+                background: rgba(255, 255, 255, 0.98); 
+                backdrop-filter: blur(20px);
+                flex-direction: column; 
+                justify-content: flex-start; 
+                padding: 100px 30px; 
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1); 
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            } 
+            .nav-links.active { right: 0; } 
+            
+            /* Logic tombol close ada di JS */
+            .hamburger { display: block; z-index: 1001; }
+            .nav-links li { width: 100%; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; }
+            .nav-links a { font-size: 1.1rem; display: block; }
+            .lang-select { width: 100%; margin-top: 20px; text-align: center; background-position: 95% center; }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 100vh; 
+            height: 100svh; 
+            min-height: 600px; 
+            background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.4)), url('danautoba.jpeg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            color: var(--white); 
+        }
+        .hero-content { max-width: 800px; padding: 0 20px; animation: fadeIn Up 1s ease-out; }
+        .hero h1 { margin-bottom: 24px; font-weight: 700; }
+        .hero p { font-size: clamp(1rem, 2vw, 1.25rem); margin-bottom: 40px; opacity: 0.9; font-weight: 300; }
+        .hero div { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* CARDS & GRID */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .car-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card, .car-card { background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.4s ease; border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; }
+        .card:hover, .car-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px -15px rgba(0,0,0,0.15); }
+        .card-img-wrapper { overflow: hidden; height: 240px; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .card:hover img { transform: scale(1.1); }
+        .card-body { padding: 25px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-meta { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; color: #64748B; }
+        .price-tag { font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+        
+        .car-card { padding: 24px; display: flex; align-items: center; gap: 20px; flex-direction: column; text-align: center; }
+        .car-card img { width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin-bottom: 15px; }
+        .car-details { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        .car-specs { font-size: 0.9rem; color: #64748B; margin-bottom: 5px; display: flex; justify-content: center; gap: 15px; }
+        
+        /* MODAL SYSTEM */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: #fff; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-content { width: 100%; height: 100%; display: flex; flex-direction: column; background-color: #fff; }
+        .modal-header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 10; }
+        .modal-header h3 { margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+        .close-modal { background: #f1f5f9; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; cursor: pointer; transition: 0.3s; }
+        .close-modal:hover { background: #e2e8f0; color: var(--accent); }
+        .modal-body { flex: 1; padding: 0; overflow-y: auto; width: 100%; margin: 0 auto; }
+        
+        .modal-footer { padding: 16px 20px; background: var(--white); border-top: 1px solid #eee; position: sticky; bottom: 0; z-index: 20; box-shadow: 0 -10px 30px rgba(0,0,0,0.03); display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .modal-footer .btn { width: 100%; padding: 14px 10px; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+
+        /* VIEWS INSIDE MODAL */
+        .detail-view { display: block; padding-bottom: 40px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .modal-hero-img { width: 100%; height: 350px; object-fit: cover; mask-image: linear-gradient(to bottom, black 80%, transparent 100%); }
+        .detail-content { padding: 0 24px; margin-top: -40px; position: relative; }
+        .modal-title-box { background: white; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .features-box { background: #F8FAFC; border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid #E2E8F0; }
+        .custom-list { padding: 0; list-style: none; display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .custom-list li { display: flex; align-items: center; gap: 12px; font-size: 1rem; color: var(--secondary); }
+        .custom-list li i { color: var(--white); background: var(--accent); min-width: 24px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+        .form-view { display: none; padding: 40px 24px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .form-card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .form-title { font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; text-align: center; font-weight: 700; }
+        .product-summary { background: #eff6ff; padding: 20px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid var(--direct-color); }
+        .summary-header { display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 10px; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+        .summary-features-list { list-style: none; padding: 0; font-size: 0.9rem; color: #64748B; }
+        .custom-input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 10px; margin-bottom: 20px; outline: none; transition: 0.3s; font-family: inherit; font-size: 1rem; }
+        .custom-input:focus { border-color: var(--accent); background: #fff; }
+
+        .about-view-content { padding: 0 24px 40px; margin-top: -40px; position: relative; }
+        .about-text-block { color: var(--secondary); font-size: 1rem; margin-bottom: 20px; text-align: justify; line-height: 1.8; }
+        .about-list { margin: 15px 0 25px 20px; color: var(--secondary); }
+        .about-list li { margin-bottom: 10px; list-style-type: disc; }
+
+        /* STATUS CHECK CSS */
+        .status-view { display: none; padding: 40px 24px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .status-result-container { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .order-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: 0.3s; }
+        .order-card:hover { border-color: var(--accent); box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
+        .order-date { font-size: 0.85rem; color: #64748B; }
+        .order-product { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .order-price { color: var(--accent); font-weight: 600; }
+        .status-badge { padding: 5px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-badge.pending { background: #FEF3C7; color: #D97706; }
+        .status-badge.confirmed { background: #D1FAE5; color: #059669; }
+        .status-badge.rejected { background: #FEE2E2; color: #DC2626; }
+        .status-section-header { font-size: 1rem; font-weight: 700; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px solid #f1f5f9; padding-bottom: 5px; }
+
+        /* OTHER SECTIONS */
+        .adventure { background: var(--primary); color: var(--white); position: relative; overflow: hidden; }
+        .adventure .card-body p, .adventure .card-meta { color: #64748B; } 
+        .adventure .section-header p { color: #94A3B8; }
+        .about-section { background-color: var(--white); }
+        .about-content { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-image { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+        .contact-wrapper { background: var(--white); border-radius: 24px; padding: 60px; box-shadow: var(--shadow); max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .contact-info-item { margin-bottom: 20px; display: flex; align-items: start; gap: 15px; }
+        .contact-info-item i { color: var(--accent); font-size: 1.2rem; margin-top: 5px; }
+        .form-control { width: 100%; padding: 16px; border: 1px solid #E2E8F0; border-radius: 12px; background: #F8FAFC; margin-bottom: 20px; font-family: inherit; outline: none; transition: 0.3s; }
+        .form-control:focus { border-color: var(--accent); background: var(--white); }
+        
+        /* --- FOOTER & SOCIALS --- */
+        footer { background: var(--primary); color: #94A3B8; padding: 60px 0 30px; text-align: center; }
+        
+        .footer-brand-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.05);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo-img { 
+            height: 45px; 
+            width: 45px; 
+            border-radius: 50%; 
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+
+        .footer-brand-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--white);
+            font-weight: 700;
+            text-align: left;
+            line-height: 1;
+        }
+        .footer-brand-text span { color: var(--accent); }
+
+        .footer-socials { margin-bottom: 25px; display: flex; justify-content: center; gap: 15px; }
+        .footer-socials a { display: inline-flex; width: 45px; height: 45px; background: rgba(255,255,255,0.05); color: var(--white); border-radius: 50%; align-items: center; justify-content: center; transition: 0.3s; font-size: 1.2rem; }
+        .footer-socials a:hover { background: var(--accent); transform: translateY(-3px); }
+
+        /* WIDGETS */
+        .float-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; flex-direction: column; gap: 15px; align-items: flex-end; }
+        .float-btn { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); color: white; cursor: pointer; transition: 0.3s; position: relative; }
+        .float-wa { background: #25D366; animation: pulse 3s infinite; }
+        .float-chat { background: var(--primary); border: 2px solid var(--accent); } .float-chat:hover { transform: scale(1.1); background: var(--secondary); }
+        .chat-widget-container { position: fixed; bottom: 100px; right: 30px; width: 350px; height: 500px; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); z-index: 2100; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); animation: fadeIn 0.3s ease-out; }
+        .chat-header { background: var(--primary); padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header h4 { font-family: 'Playfair Display', serif; margin: 0; font-size: 1.1rem; }
+        .chat-header span { font-size: 0.8rem; color: var(--accent); display: block; }
+        .close-chat { cursor: pointer; font-size: 1.2rem; opacity: 0.8; transition: 0.2s; } .close-chat:hover { opacity: 1; color: var(--accent); }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #F8FAFC; display: flex; flex-direction: column; gap: 10px; }
+        .message-bubble { max-width: 80%; padding: 12px 16px; font-size: 0.9rem; border-radius: 12px; position: relative; word-wrap: break-word; }
+        .msg-in { align-self: flex-start; background: white; color: var(--secondary); border-bottom-left-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .msg-out { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 2px; }
+        .msg-time { display: block; font-size: 0.7rem; margin-top: 5px; opacity: 0.7; text-align: right; }
+        .chat-input-area { padding: 15px; background: white; border-top: 1px solid #eee; display: flex; gap: 10px; }
+        .chat-input { flex: 1; padding: 10px 15px; border: 1px solid #e2e8f0; border-radius: 50px; outline: none; font-size: 0.9rem; transition: 0.2s; }
+        .chat-input:focus { border-color: var(--accent); }
+        .chat-send-btn { background: var(--accent); color: white; width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .chat-send-btn:hover { background: var(--accent-hover); transform: scale(1.1); }
+
+        /* CUSTOM NOTIFICATION SYSTEM */
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
+        .toast-card { background: white; padding: 16px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-left: 5px solid var(--accent); display: flex; align-items: center; gap: 14px; min-width: 320px; max-width: 400px; transform: translateX(120%); animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: auto; }
+        .toast-card.success { border-color: var(--success); }
+        .toast-card.error { border-color: var(--error); }
+        .toast-card.info { border-color: var(--accent); }
+        .toast-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .toast-card.success .toast-icon { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .toast-card.error .toast-icon { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+        .toast-card.info .toast-icon { background: rgba(197, 160, 89, 0.1); color: var(--accent); }
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); display: block; margin-bottom: 2px; }
+        .toast-message { font-size: 0.85rem; color: #64748B; line-height: 1.4; }
+        .toast-close { cursor: pointer; color: #94A3B8; font-size: 1.1rem; padding: 5px; transition: 0.2s; }
+        .toast-close:hover { color: var(--primary); }
+        @keyframes slideInRight { to { transform: translateX(0); } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- CSS TAMBAHAN: ULASAN & RATING --- */
+        .testimonial-section { background: var(--light); padding: 80px 0; }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
+        
+        /* CSS BARU: HORIZONTAL SCROLL UNTUK RATING > 10 */
+        .review-scroll-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 25px;
+            padding: 10px 5px 25px 5px; /* Padding bawah agak besar untuk scrollbar */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Agar smooth di HP */
+            margin-top: 40px;
+        }
+        
+        .review-scroll-wrapper .review-card {
+            min-width: 320px; /* Lebar fix agar kartu tidak mengecil */
+            flex-shrink: 0;   /* Mencegah kartu menyusut */
+        }
+
+        /* Styling Scrollbar agar terlihat elegan */
+        .review-scroll-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        .review-scroll-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .review-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .review-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--accent); /* Warna emas saat di-hover */
+        }
+
+        .review-card { background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; transition: 0.3s; }
+        .review-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-color: var(--accent); }
+        .review-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .review-avatar { width: 45px; height: 45px; background: var(--primary); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; }
+        .review-info h4 { font-size: 1rem; color: var(--primary); margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .review-info span { font-size: 0.75rem; color: #94A3B8; }
+        .star-display { color: #F59E0B; font-size: 0.9rem; margin-bottom: 10px; }
+        .review-text { color: var(--secondary); font-size: 0.95rem; line-height: 1.6; font-style: italic; }
+        
+        /* Star Input di Modal */
+        .star-rating-input { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-direction: row-reverse; }
+        .star-rating-input i { font-size: 2rem; color: #e2e8f0; cursor: pointer; transition: 0.2s; }
+        .star-rating-input i:hover, .star-rating-input i:hover ~ i { color: #F59E0B; }
+        .star-rating-input i.active { color: #F59E0B; }
+
+        @media (max-width: 960px) { 
+            .about-content, .contact-wrapper { flex-direction: column; grid-template-columns: 1fr; } .about-image { margin-top: 30px; } .contact-wrapper { padding: 40px 30px; } 
+            
+            /* Modal footer grid adjustment for mobile */
+            .modal-footer { grid-template-columns: 1fr 1fr; padding: 12px 16px; gap: 10px; } 
+            #waLink { order: 1; } #webBookBtn { order: 2; } 
+            .modal-footer .btn { padding: 12px; font-size: 0.9rem; } .chat-widget-container { width: 90%; right: 5%; bottom: 100px; height: 60vh; } .notification-container { right: 50%; transform: translateX(50%); top: 10px; width: 90%; align-items: center; } .toast-card { width: 100%; min-width: auto; } 
+        }
+        @media (max-width: 480px) { 
+            .container { padding: 0 16px; } 
+            .section-header h2::after { width: 40px; } 
+            .card-body { padding: 20px; } 
+            .price-tag { font-size: 1.1rem; } 
+            .float-btn { width: 55px; height: 55px; font-size: 28px; } 
+            .float-container { bottom: 20px; right: 20px; } 
+            .brand-text { font-size: 1.1rem; }
+            .brand-logo-img { height: 45px; width: 45px; }
+            .footer-brand-box { flex-direction: column; gap: 10px; padding: 20px; border-radius: 20px;}
+            .footer-brand-text { text-align: center; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <header id="mainHeader">
+        <div class="container nav-wrapper">
+            <a href="#home" class="brand-container">
+                <img src="daulay.jpeg" alt="Logo" class="brand-logo-img">
+                <div class="brand-text">
+                    Daulay_Travel<span>Medan</span>
+                    <small>Premium Tour & Travel</small>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <div style="position: absolute; top: 25px; right: 25px; display: none;" onclick="window.toggleMenu()" id="mobileCloseBtn">
+                        <i class="fas fa-times" style="font-size: 1.5rem; color: var(--secondary);"></i>
+                    </div>
+
+                    <li><a href="#home" onclick="window.toggleMenu()" data-i18n="nav_home">Beranda</a></li>
+                    <li><a href="#services" onclick="window.toggleMenu()" data-i18n="nav_packages">Paket Wisata</a></li>
+                    <li><a href="#rental" onclick="window.toggleMenu()" data-i18n="nav_rental">Sewa Mobil</a></li>
+                    <li><a href="#adventure" onclick="window.toggleMenu()" data-i18n="nav_bus">Bus Pariwisata</a></li>
+                    <li><a href="#" onclick="window.toggleMenu(); window.showStatusModal()" data-i18n="nav_status" style="color:var(--accent);">Cek Pesanan</a></li>
+                    <li><a href="#about" onclick="window.toggleMenu()" data-i18n="nav_about">Tentang Kami</a></li>
+                    <li><a href="#contact" onclick="window.toggleMenu()" data-i18n="nav_contact">Kontak</a></li>
+                    
+                    <li class="lang-select-wrapper">
+                        <select class="lang-select" onchange="window.changeLanguage(this.value)">
+                            <option value="id">🇮🇩 ID</option>
+                            <option value="en">🇺🇸 EN</option>
+                            <option value="zh">🇨🇳 CN</option>
+                            <option value="ja">🇯🇵 JP</option>
+                            <option value="es">🇪🇸 ES</option>
+                            <option value="fr">🇫🇷 FR</option>
+                            <option value="de">🇩🇪 DE</option>
+                        </select>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="hamburger" onclick="window.toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 data-i18n="hero_title">Jelajahi Dunia Bersama <br>Daulay_TravelMedan</h1>
+            <p data-i18n="hero_subtitle">Mitra perjalanan premium Anda. Menyediakan paket wisata terbaik, armada nyaman, dan petualangan tak terlupakan.</p>
+            <div>
+                <a href="#services" class="btn btn-gold" data-i18n="btn_view_packages">Lihat Paket</a>
+                <a href="#contact" class="btn btn-outline" data-i18n="btn_consult">Konsultasi Trip</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="title_destinations">Destinasi Populer</h2>
+                <p data-i18n="subtitle_destinations">Paket wisata pilihan yang telah kami kurasi untuk pengalaman liburan terbaik Anda.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="5 DAYS 4 NIGHT.jpeg" alt="Danau Toba">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta"><span><i class="fas fa-clock"></i> 5 Days 4 Nights</span><span><i class="fas fa-star"></i> 4.9</span></div>
+                        <h3 data-i18n="card_toba_title">Tour Medan/ Danau Toba 5 Hari 4 Malam MEDAN / LAKE TOBA TOUR PACKAGE 5 DAYS 4 NIGHTS</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_toba_desc">Nikmati keindahan danau vulkanik terbesar dengan akomodasi premium.</p>
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_toba_title"
+                                data-price="" 
+                                data-img="3 DAYS 2 NIGHT.jpeg"
+                                data-desc-key="card_toba_full_desc"
+                                data-list-key="card_toba_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="4 DAYS 3 NIGHT.jpeg" alt="">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta"><span><i class="fas fa-clock"></i> 4 Days 3 Nights</span><span><i class="fas fa-star"></i> 4.8</span></div>
+                        <h3 data-i18n="card_tobadua_title">Tour Medan/ Danau Toba 4 Hari 3 Malam MEDAN / LAKE TOBA TOUR PACKAGE 4 DAYS 3 NIGHTS</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobadua_desc">Nikmati keindahan danau vulkanik terbesar di danau toba.</p>
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobadua_title"
+                                data-price=""
+                                data-img="4 DAYS 3 NIGHT.jpeg"
+                                data-desc-key="card_tobadua_full_desc"
+                                data-list-key="card_tobadua_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="3 DAYS 2 NIGHT.jpeg" alt="Danau Toba 3D2N">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 3 Days 2 Nights</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        
+                        <h3 data-i18n="card_tobatiga_title">Tour Medan/Danau Toba 3 Hari 2 Malam MEDAN/LAKE TOBA TOUR PACKAGE 3 DAYS 2 NIGHTS</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobatiga_desc">
+                            Paket wisata padat mengunjungi Samosir, Air Terjun Efrata, dan Berastagi.
+                        </p>
+                        
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobatiga_title"
+                                data-price=""
+                                data-img="3 DAYS 2 NIGHT.jpeg"
+                                data-desc-key="card_tobatiga_full_desc"
+                                data-list-key="card_tobatiga_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="1.jpeg" alt="Danau Toba 3D2Nm">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 1 Days</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        
+                        <h3 data-i18n="card_tobaempat_title">ONE DAY TRIP SAMOSIR/LAKE TOBA
+Day 1 (MEDAN/KNO AIRPORT – SAMOSIR/LAKE TOBA)</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobaempat_desc">
+                            Nikmati perjalanan singkat namun berkesan menjelajahi keindahan Danau Toba dan Pulau Samosir dalam satu hari penuh.
+                        </p>
+                        
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobaempat_title"
+                                data-price=""
+                                data-img="1.jpeg"
+                                data-desc-key="card_tobaempat_full_desc"
+                                data-list-key="card_tobaempat_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                            <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="2.jpeg" alt="Danau Toba 3D2Nmn">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 1 Days</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        
+                        <h3 data-i18n="card_tobalima_title">ONE DAY TRIP BERASTAGI Day 1 (MEDAN/KNO AIRPORT – BERASTAGI)</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobalima_desc">
+                            Perjalanan dimulai dengan penjemputan di Bandara KNO atau Kota Medan, kemudian melanjutkan perjalanan menuju Berastagi, kota wisata berhawa sejuk di dataran tinggi Karo.
+                        </p>
+                        
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobalima_title"
+                                data-price=""
+                                data-img="2.jpeg"
+                                data-desc-key="card_tobalima_full_desc"
+                                data-list-key="card_tobalima_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                                            <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="Medan.jpeg" alt="Medan">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 1 Days</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        
+                        <h3 data-i18n="card_tobaenam_title">ONE DAY TRIP MEDAN Day 1 (MEDAN CITY TOUR)</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobaenam_desc">
+                            Jelajahi pesona Kota Medan dalam satu hari penuh yang kaya akan sejarah, budaya, dan kuliner khas.
+                        </p>
+                        
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobaenam_title"
+                                data-price=""
+                                data-img="Medan.jpeg"
+                                data-desc-key="card_tobaenam_full_desc"
+                                data-list-key="card_tobaenam_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                                                                            <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="Medan.jpeg" alt="Medan">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 1 Days</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        
+                        <h3 data-i18n="card_tobatujuh_title">ONE DAY TRIP MEDAN Day 1 (MEDAN CITY TOUR)</h3>
+                        
+                        <p style="color:#666; margin-bottom:20px; font-size:0.95rem;" data-i18n="card_tobatujuh_desc">
+                            Jelajahi pesona Kota Medan dalam satu hari penuh yang kaya akan sejarah, budaya, dan kuliner khas.
+                        </p>
+                        
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="tour"
+                                data-name-key="card_tobatujuh_title"
+                                data-price=""
+                                data-img="Medan.jpeg"
+                                data-desc-key="card_tobatujuh_full_desc"
+                                data-list-key="card_tobatujuh_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+    <section id="rental" style="background-color: var(--white);">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="title_fleet">Armada Premium</h2>
+                <p data-i18n="subtitle_fleet">Kendaraan bersih, terawat, dan supir berpengalaman siap mengantar Anda.</p>
+            </div>
+
+            <div class="car-grid">
+                <div class="car-card">
+                    <img src="https://www.toyota.astra.co.id/sites/default/files/2021-08/1_innova%20v%20luxury%20white_0.png" alt="Innova">
+                    <div class="car-details">
+                        <h3 data-i18n="car_innova_title">Innova Reborn</h3>
+                        <div class="car-specs"><span><i class="fas fa-user"></i> 7 Seat</span><span><i class="fas fa-snowflake"></i> AC</span></div>
+                        
+                        <div class="price-tag" style="margin: 10px 0;">Rp 750.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+                        
+                        <p style="font-size:0.9rem; color:#64748B; margin-bottom:10px;" data-i18n="car_innova_desc">MPV Premium dengan suspensi empuk & kabin senyap. Cocok untuk eksekutif & keluarga.</p>
+                        
+                        <button class="btn btn-sm btn-gold view-detail" 
+                            data-type="car"
+                            data-name-key="car_innova_title"
+                            data-price="Rp 750.000 / Hari" 
+                            data-img="https://www.toyota.astra.co.id/sites/default/files/2021-08/1_innova%20v%20luxury%20white_0.png"
+                            data-desc-key="car_innova_desc"
+                            data-list-key="car_innova_list"
+                            data-i18n="btn_detail">
+                            Lihat Detail & Pesan
+                        </button>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img src="https://www.toyota.astra.co.id/sites/default/files/2022-04/1%20super%20white.png" alt="Hiace">
+                    <div class="car-details">
+                        <h3 data-i18n="car_hiace_title">Toyota Hiace</h3>
+                        <div class="car-specs"><span><i class="fas fa-user"></i> 14 Seat</span><span><i class="fas fa-suitcase"></i> Big</span></div>
+                        
+                        <div class="price-tag" style="margin: 10px 0;">Rp 1.100.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+
+                        <p style="font-size:0.9rem; color:#64748B; margin-bottom:10px;" data-i18n="car_hiace_desc">Commuter van legendaris. Kabin luas, AC dingin merata, solusi hemat untuk rombongan 14 orang.</p>
+                        
+                        <button class="btn btn-sm btn-gold view-detail" 
+                            data-type="car"
+                            data-name-key="car_hiace_title"
+                            data-price="Rp 1.100.000 / Hari" 
+                            data-img="https://www.toyota.astra.co.id/sites/default/files/2022-04/1%20super%20white.png"
+                            data-desc-key="car_hiace_desc"
+                            data-list-key="car_hiace_list"
+                            data-i18n="btn_detail">
+                            Lihat Detail & Pesan
+                        </button>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img src="https://www.toyota.astra.co.id/sites/default/files/2021-11/1-avanza-purplish-silver.png" alt="Avanza">
+                    <div class="car-details">
+                        <h3 data-i18n="car_avanza_title">All New Avanza</h3>
+                        <div class="car-specs"><span><i class="fas fa-user"></i> 6 Seat</span><span><i class="fas fa-bolt"></i> Fast</span></div>
+                        
+                        <div class="price-tag" style="margin: 10px 0;">Rp 550.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+
+                        <p style="font-size:0.9rem; color:#64748B; margin-bottom:10px;" data-i18n="car_avanza_desc">MPV sejuta umat. Irit BBM, bertenaga, dan lincah bermanuver di segala medan.</p>
+                        
+                        <button class="btn btn-sm btn-gold view-detail" 
+                            data-type="car"
+                            data-name-key="car_avanza_title"
+                            data-price="Rp 550.000 / Hari" 
+                            data-img="https://www.toyota.astra.co.id/sites/default/files/2021-11/1-avanza-purplish-silver.png"
+                            data-desc-key="car_avanza_desc"
+                            data-list-key="car_avanza_list"
+                            data-i18n="btn_detail">
+                            Lihat Detail & Pesan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="adventure" class="adventure text-white">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color:var(--white);" data-i18n="title_bus">Sewa Mini Bus & Big Bus</h2>
+                <p style="color:#94a3b8;" data-i18n="subtitle_bus">Solusi perjalanan rombongan dengan armada bus terbaru, bersih, dan nyaman.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Isuzu Elf Long">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta"><span><i class="fas fa-users"></i> 19 Seat</span><span><i class="fas fa-star"></i> 4.8</span></div>
+                        <h3 data-i18n="bus_elf_title">Isuzu Elf Long</h3>
+                        
+                        <div class="price-tag" style="margin-bottom: 10px;">Rp 1.300.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+
+                        <p data-i18n="bus_elf_desc">Minibus sasis panjang kapasitas 19 orang. Tangguh di tanjakan, cocok untuk wisata rombongan besar.</p>
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="car"
+                                data-name-key="bus_elf_title"
+                                data-price="Rp 1.300.000 / Hari"
+                                data-img="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                data-desc-key="bus_elf_full_desc"
+                                data-list-key="bus_elf_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://www.toyota.astra.co.id/sites/default/files/2021-12/hiace-premio-1.png" alt="Hiace Premio">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta"><span><i class="fas fa-crown"></i> 14 Seat</span><span><i class="fas fa-star"></i> 5.0</span></div>
+                        <h3 data-i18n="bus_premio_title">Hiace Premio Luxury</h3>
+                        
+                        <div class="price-tag" style="margin-bottom: 10px;">Rp 1.500.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+
+                        <p data-i18n="bus_premio_desc">Varian mewah dari Hiace. Desain modern, ruang kaki lega, dan kenyamanan setara sedan kelas atas.</p>
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="car"
+                                data-name-key="bus_premio_title"
+                                data-price="Rp 1.500.000 / Hari"
+                                data-img="https://www.toyota.astra.co.id/sites/default/files/2021-12/hiace-premio-1.png"
+                                data-desc-key="bus_premio_full_desc"
+                                data-list-key="bus_premio_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Medium Bus">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta"><span><i class="fas fa-bus"></i> 30-35 Seat</span><span><i class="fas fa-star"></i> 4.9</span></div>
+                        <h3 data-i18n="bus_medium_title">Medium Bus Wisata</h3>
+                        
+                        <div class="price-tag" style="margin-bottom: 10px;">Rp 2.000.000 <span style="font-size:0.8rem; color:#64748B; font-weight:400;">/ Hari</span></div>
+
+                        <p data-i18n="bus_medium_desc">Bus wisata medium dengan fasilitas Full AC, TV, & Karaoke. Bagasi luas untuk oleh-oleh Anda.</p>
+                        <div class="card-meta">
+                            <button class="btn btn-sm btn-gold view-detail" style="width: 100%;"
+                                data-type="car"
+                                data-name-key="bus_medium_title"
+                                data-price="Rp 2.000.000 / Hari"
+                                data-img="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                data-desc-key="bus_medium_full_desc"
+                                data-list-key="bus_medium_list"
+                                data-i18n="btn_detail">
+                                Lihat Detail & Pesan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle" data-i18n="modal_title_detail">Detail Paket</h3>
+                <div class="close-modal" onclick="window.closeModal()">&times;</div>
+            </div>
+            
+            <div class="modal-body">
+                <div id="detailView" class="detail-view">
+                    <img id="modalImg" src="" alt="Detail Image" class="modal-hero-img">
+                    
+                    <div class="detail-content">
+                        <div class="modal-title-box">
+                            <h2 id="modalName" style="color:var(--primary); font-family:'Playfair Display',serif; line-height:1.2;"></h2>
+                            <p id="modalDesc" style="margin-top:10px; color:var(--secondary); font-size:1rem;"></p>
+                        </div>
+
+                        <div style="background-color: #f1f5f9; padding: 15px; border-radius: 12px; font-size: 0.9rem; color: #64748B; border-left: 4px solid #cbd5e1;">
+                            <strong data-i18n="text_note">Catatan:</strong> <span data-i18n="text_price_note">Cadangan Itinerary boleh diajukan ( Request ) dan akan disesuaikan dengan jadwal penerbangan para peserta tour.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bookingForm" class="form-view">
+                    <div class="form-card">
+                        <h3 class="form-title" id="formHeaderTitle" data-i18n="form_title">Formulir Pemesanan</h3>
+                        <div class="product-summary">
+                            <div class="summary-header">
+                                <div>
+                                    <strong data-i18n="text_product">Produk:</strong> <span id="formProductName" style="display:block; font-size:1.1rem; color:var(--primary);"></span>
+                                </div>
+                            </div>
+                            
+                            </div>
+                        
+                        <form id="dbBookingForm">
+                            <label style="font-size:0.9rem; color:#64748B; margin-bottom:5px; display:block;" data-i18n="label_name">Nama Lengkap</label>
+                            <input type="text" id="inpName" class="custom-input" required placeholder="Contoh: Budi Santoso" data-i18n-placeholder="ph_name">
+                            
+                            <label style="font-size:0.9rem; color:#64748B; margin-bottom:5px; display:block;" data-i18n="label_wa">Nomor WhatsApp</label>
+                            <input type="tel" id="inpWa" class="custom-input" required placeholder="Contoh: 08123456789" data-i18n-placeholder="ph_wa">
+                            
+                            <label style="font-size:0.9rem; color:#64748B; margin-bottom:5px; display:block;" data-i18n="label_email">Email</label>
+                            <input type="email" id="inpEmail" class="custom-input" required placeholder="email@contoh.com" data-i18n-placeholder="ph_email">
+                            
+                            <label style="font-size:0.9rem; color:#64748B; margin-bottom:5px; display:block;" data-i18n="label_date">Tanggal Rencana</label>
+                            <input type="date" id="inpDate" class="custom-input" required>
+                            
+                            <label style="font-size:0.9rem; color:#64748B; margin-bottom:5px; display:block;" data-i18n="label_note">Catatan Tambahan</label>
+                            <textarea id="inpNote" class="custom-input" rows="3" placeholder="Jumlah orang, jam penjemputan, dll..." data-i18n-placeholder="ph_note"></textarea>
+                            
+                            <div style="display:flex; gap:10px; margin-top:20px;">
+                                <button type="button" class="btn btn-outline" onclick="window.showDetailView()" style="color:var(--primary); border-color:var(--primary); flex:1;" data-i18n="btn_back">Kembali</button>
+                                <button type="submit" id="btnSubmitDB" class="btn btn-web" style="flex:2;" data-i18n="btn_send">Kirim Pesanan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="statusView" class="status-view">
+                    <div class="form-card">
+                        <h3 class="form-title" data-i18n="status_title">Cek Status Pesanan</h3>
+                        <p style="text-align:center; color:#64748B; margin-bottom:20px; font-size:0.9rem;" data-i18n="status_desc">Masukkan nomor WhatsApp yang Anda gunakan saat memesan.</p>
+                        
+                        <div style="display:flex; gap:10px; margin-bottom:20px;">
+                            <input type="tel" id="statusInpWa" class="custom-input" style="margin-bottom:0;" placeholder="0812345..." data-i18n-placeholder="status_placeholder">
+                            <button class="btn btn-gold" onclick="window.checkStatus()" data-i18n="status_btn">Cek</button>
+                        </div>
+
+                        <div id="statusResultContainer" class="status-result-container">
+                            </div>
+                    </div>
+                </div>
+
+                <div id="aboutView" class="detail-view" style="display: none;">
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tim TourTravelYou" class="modal-hero-img">
+                    
+                    <div class="about-view-content">
+                        <div class="modal-title-box">
+                            <h2 style="color:var(--primary); font-family:'Playfair Display',serif; margin-bottom:10px;" data-i18n="about_title">Cerita Perjalanan Kami</h2>
+                            <p style="color:var(--accent); font-weight:700;" data-i18n="about_subtitle">Melayani dengan Hati Sejak 2018</p>
+                        </div>
+
+                        <div class="about-text-block">
+                            <p data-i18n="about_p1"><strong>Daulay_TravelMedan</strong> didirikan pada tahun 2018 di jantung kota Medan Lake Toba Brastagi , Aceh & Padang. Berawal dari kecintaan kami terhadap keindahan alam Indonesia, khususnya Tanah Karo dan Danau Toba, kami berkomitmen untuk memperkenalkan kekayaan budaya dan alam ini kepada dunia.</p>
+                            <br>
+                            <p data-i18n="about_p2">Selama lebih dari satu dekade, kami telah bertumbuh menjadi salah satu mitra perjalanan terpercaya yang melayani ribuan wisatawan, baik domestik maupun mancanegara. Kami percaya bahwa perjalanan bukan sekadar mengunjungi tempat baru, tetapi tentang menciptakan kenangan yang abadi.</p>
+                        </div>
+
+                        <div class="features-box">
+                            <h4 data-i18n="about_vision"><i class="fas fa-bullseye" style="color:var(--accent); margin-right:5px;"></i> Visi & Misi</h4>
+                            <ul class="about-list">
+                                <li data-i18n="about_vm1">Menjadi penyedia layanan pariwisata terdepan di Sumatera Utara yang mengutamakan kearifan lokal.</li>
+                                <li data-i18n="about_vm2">Memberikan pelayanan prima dengan standar keamanan dan kenyamanan tertinggi.</li>
+                                <li data-i18n="about_vm3">Menyediakan armada transportasi yang bersih, terawat, dan legal.</li>
+                                <li data-i18n="about_vm4">Menawarkan harga yang kompetitif tanpa mengurangi kualitas layanan.</li>
+                            </ul>
+                        </div>
+
+                        <div class="features-box" style="background: white; border-color: var(--accent);">
+                            <h4 data-i18n="about_why"><i class="fas fa-check-circle" style="color:var(--accent); margin-right:5px;"></i> Mengapa Memilih Kami?</h4>
+                            <p style="color:var(--secondary); font-size:0.95rem;" data-i18n="about_why_desc">
+                                Kami memiliki tim supir dan pemandu wisata yang tidak hanya berpengalaman dalam mengemudi, tetapi juga memiliki pengetahuan mendalam tentang sejarah dan budaya setempat. Bersama kami, Anda tidak hanya diantar, tetapi dipandu layaknya keluarga sendiri.
+                            </p>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <a href="#contact" onclick="window.closeModal()" class="btn btn-gold" data-i18n="btn_contact_us">Hubungi Kami Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer" id="modalActionFooter">
+                <a id="waLink" href="#" target="_blank" class="btn btn-wa">
+                    <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                </a>
+
+                <button id="webBookBtn" class="btn btn-web" onclick="window.showBookingForm('web')">
+                    <i class="fas fa-globe"></i> Booking Online
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reviewModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; height: auto; margin: auto; border-radius: 20px; position: relative; top: 50%; transform: translateY(-50%); max-height: 90vh;">
+            <div class="modal-header">
+                <h3>Beri Penilaian</h3>
+                <div class="close-modal" onclick="window.closeReviewModal()">&times;</div>
+            </div>
+            <div class="modal-body" style="padding: 30px;">
+                <form id="reviewForm">
+                    <div style="text-align: center; margin-bottom: 15px; color: #64748B;">
+                        Ketuk bintang untuk memberi rating
+                    </div>
+                    
+                    <div class="star-rating-input" id="starInputGroup">
+                        <i class="fas fa-star" data-value="5" onclick="window.setRating(5)"></i>
+                        <i class="fas fa-star" data-value="4" onclick="window.setRating(4)"></i>
+                        <i class="fas fa-star" data-value="3" onclick="window.setRating(3)"></i>
+                        <i class="fas fa-star" data-value="2" onclick="window.setRating(2)"></i>
+                        <i class="fas fa-star" data-value="1" onclick="window.setRating(1)"></i>
+                    </div>
+                    <input type="hidden" id="inpRatingValue" required>
+
+                    <label style="font-size:0.9rem; color:#64748B;">Nama Anda</label>
+                    <input type="text" id="inpReviewName" class="custom-input" placeholder="Nama Lengkap" required>
+
+                    <label style="font-size:0.9rem; color:#64748B;">Ceritakan Pengalaman Anda</label>
+                    <textarea id="inpReviewText" class="custom-input" rows="4" placeholder="Pelayanan ramah, mobil bersih..." required></textarea>
+
+                    <button type="submit" id="btnSubmitReview" class="btn btn-web" style="width: 100%;">Kirim Ulasan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <section id="testimonials" class="testimonial-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="title_reviews">Kata Mereka</h2>
+                <p data-i18n="subtitle_reviews">Pengalaman jujur dari pelanggan setia Daulay_TravelMedan.</p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="btn btn-gold" onclick="window.openReviewModal()">
+                    <i class="fas fa-pen"></i> &nbsp; Tulis Ulasan
+                </button>
+            </div>
+
+            <div id="reviewContainer" class="review-grid">
+                <div style="grid-column: 1/-1; text-align: center; color: #64748B;">
+                    <i class="fas fa-spinner fa-spin"></i> Memuat ulasan...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header"><h2 data-i18n="title_about">Tentang Kami</h2></div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Daulay_TravelMedan</h3>
+                    <p data-i18n="about_summary">Mitra perjalanan terpercaya sejak 2018. Melayani ribuan wisatawan dengan sepenuh hati.</p>
+                    <button class="btn btn-gold" onclick="window.openAbout()" data-i18n="btn_read_more">Lihat Selengkapnya</button>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tim Kami">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background-color: #F1F5F9;">
+        <div class="container">
+            <div class="section-header"><h2 data-i18n="title_contact">Hubungi Kami</h2></div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-info-item"><i class="fas fa-map-marker-alt"></i><div><h4 data-i18n="label_address">Alamat</h4><p>Jl. Veteran Ps V, Kec labuhan Deli. Kabupaten Deli serdang, Medan, Indonesia</p></div></div>
+                    <div class="contact-info-item"><i class="fas fa-phone"></i><div><h4 data-i18n="label_phone">Telepon / WA</h4><p>+62 852 6095 4651</p></div></div>
+                </div>
+                <form action="#">
+                    <input type="text" class="form-control" placeholder="Nama Lengkap" data-i18n-placeholder="ph_name">
+                    <input type="email" class="form-control" placeholder="Alamat Email" data-i18n-placeholder="ph_email">
+                    <textarea class="form-control" rows="5" placeholder="Pesan Anda..." data-i18n-placeholder="ph_message"></textarea>
+                    <button type="submit" class="btn btn-gold" style="width:100%;" data-i18n="btn_send_msg">Kirim Pesan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-brand-box">
+                <img src="daulay.jpeg" alt="Daulay Travel Footer Logo" class="footer-logo-img">
+                <div class="footer-brand-text">
+                    Daulay_Travel<span>Medan</span>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+
+            <p>&copy; 2026 Daulay_TravelMedan. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="float-container">
+        <div class="float-btn float-chat" onclick="window.toggleChatWidget()">
+            <i class="fas fa-comments"></i>
+        </div>
+
+        <a href="https://wa.me/6282276368335?text=Halo%20Admin%20Daulay_TravelMedan,%20saya%20butuh%20bantuan." class="float-btn float-wa" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <div id="chatWidget" class="chat-widget-container">
+        <div class="chat-header">
+            <div>
+                <h4>Customer Service</h4>
+                <span data-i18n="chat_status">Online &bull; Siap Membantu</span>
+            </div>
+            <div class="close-chat" onclick="window.toggleChatWidget()">&times;</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message-bubble msg-in">
+                <span data-i18n="chat_welcome">Halo! Selamat datang di Daulay_TravelMedan. Ada yang bisa kami bantu hari ini?</span>
+                <span class="msg-time">Sekarang</span>
+            </div>
+        </div>
+        <form id="chatForm" class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Tulis pesan..." required autocomplete="off" data-i18n-placeholder="ph_chat">
+            <button type="submit" class="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, where, orderBy, onSnapshot, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // >> ISI KONFIGURASI FIREBASE ANDA DI SINI <<
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAq6nC5wIUUEeyJNVl9mjj5fBtvoyZMhM",
+            authDomain: "jdjeiwwssw.firebaseapp.com",
+            projectId: "jdjeiwwssw",
+            storageBucket: "jdjeiwwssw.firebasestorage.app",
+            messagingSenderId: "798647715940",
+            appId: "1:798647715940:web:752ae31948b8656d1c7771",
+            measurementId: "G-0P3VV162PW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- 2. LOGIKA TRANSLATION / MULTI BAHASA (7 BAHASA) ---
+        const translations = {
+            id: {
+                nav_home: "Beranda", nav_packages: "Paket Wisata", nav_rental: "Sewa Mobil", nav_bus: "Bus Pariwisata", nav_about: "Tentang Kami", nav_contact: "Kontak", nav_status: "Cek Status",
+                hero_title: "Jelajahi Dunia Bersama <br>Daulay_TravelMedan", hero_subtitle: "Mitra perjalanan premium Anda. Menyediakan paket wisata terbaik, armada nyaman, dan petualangan tak terlupakan.",
+                btn_view_packages: "View Packages", btn_consult: "Konsultasi Trip",
+                title_destinations: "Destinasi Populer", subtitle_destinations: "Paket wisata pilihan yang telah kami kurasi untuk pengalaman liburan terbaik Anda.",
+                btn_detail: "Lihat Detail & Pesan",
+                title_fleet: "Armada Premium", subtitle_fleet: "Kendaraan bersih, terawat, dan supir berpengalaman siap mengantar Anda.",
+                title_bus: "Sewa Mini Bus & Big Bus", subtitle_bus: "Solusi perjalanan rombongan dengan armada bus terbaru, bersih, dan nyaman.",
+                title_about: "Tentang Kami", about_summary: "Mitra perjalanan terpercaya sejak 2018. Melayani ribuan wisatawan dengan sepenuh hati.", btn_read_more: "Lihat Selengkapnya",
+                title_contact: "Hubungi Kami", label_address: "Alamat", label_phone: "Telepon / WA", ph_name: "Nama Lengkap", ph_email: "Alamat Email", ph_message: "Pesan Anda...", btn_send_msg: "Kirim Pesan",
+                modal_title_detail: "Detail Paket", text_facilities: "Fasilitas Termasuk:", text_note: "Catatan:", text_price_note: "Harga dapat berubah sewaktu-waktu (High Season/Lebaran/Tahun Baru).",
+                form_title: "Formulir Pemesanan", text_product: "Produk:", text_price: "Harga:", text_included: "Termasuk:", label_name: "Nama Lengkap", label_wa: "Nomor WhatsApp", ph_wa: "Contoh: 08123456789", label_email: "Email", label_date: "Tanggal Rencana", label_note: "Catatan Tambahan", ph_note: "Jumlah orang, jam penjemputan, dll...", btn_back: "Kembali", btn_send: "Kirim Pesanan",
+                about_title: "Cerita Perjalanan Kami", about_subtitle: "Melayani dengan Hati Sejak 2018", about_p1: "Daulay_TravelMedan didirikan pada tahun 2018 di jantung kota Medan Lake Toba Brastagi Aceh & Padang...", about_p2: "Selama lebih dari satu dekade, kami telah bertumbuh menjadi salah satu mitra perjalanan terpercaya...", about_vision: "Visi & Misi", about_vm1: "Menjadi penyedia layanan pariwisata terdepan di Sumatera Utara.", about_vm2: "Memberikan pelayanan prima dengan standar keamanan.", about_vm3: "Menyediakan armada transportasi yang bersih dan legal.", about_vm4: "Menawarkan harga yang kompetitif.", about_why: "Mengapa Memilih Kami?", about_why_desc: "Kami memiliki tim supir dan pemandu wisata yang berpengalaman...",
+                btn_contact_us: "Hubungi Kami Sekarang", btn_direct_book: "Pesan Langsung", chat_status: "Online • Siap Membantu", chat_welcome: "Halo! Selamat datang di Daulay_TravelMedan. Ada yang bisa kami bantu hari ini?", ph_chat: "Tulis pesan...",
+                status_title: "Cek Status Pesanan", status_desc: "Masukkan nomor WhatsApp yang Anda gunakan saat memesan.", status_placeholder: "0812345...", status_btn: "Cek",
+                title_reviews: "Kata Mereka", subtitle_reviews: "Pengalaman jujur dari pelanggan setia Daulay_TravelMedan.",
+                
+                // --- PAKET 1: TOBA 5H4M ---
+                card_toba_title: "Tour Medan/Danau Toba 5 Hari 4 Malam MEDAN/LAKE TOBA TOUR PACKAGE 5 DAYS 4 NIGHTS", 
+                card_toba_desc: "Nikmati keindahan danau vulkanik terbesar dengan dengan keindahan danau toba.",
+                card_toba_full_desc: `
+                    MEDAN / LAKE TOBA TOUR PACKAGE 5 DAYS 4 NIGTS
+                    <br><br>
+                    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+                        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+                        <div style="margin-bottom:15px;">
+                            <b>DAY 1</b><br>
+                            ☆ Pickup Airport Kualanamu (Disarankan pagi sampai airport)<br>
+                            ☆ Breakfast dekat kawasan airport<br>
+                            ☆ Ladang Teh Sidamanik<br>
+                            ☆ Bah Damanik<br>
+                            ☆ Lunch<br>
+                            ☆ On The Way to Parapat<br>
+                            ☆ Tiba Di Parapat, Berfoto di I Love U Lake Toba<br>
+                            ☆ Dinner<br>
+                            ☆ Check in di Parapat
+                        </div>
+
+                        <div style="margin-bottom:15px;">
+                            <b>DAY 2</b><br>
+                            ☆ Breakfast at hotel<br>
+                            ☆ Check out hotel<br>
+                            ☆ Cruise To Samosir<br>
+                            ☆ Visit Huta Siallagan (Rumah Adat Batak Toba)<br>
+                            ☆ Ponggol Bridge<br>
+                            ☆ Visit Holbung Hill<br>
+                            ☆ Visit Efrata Waterfall<br>
+                            ☆ Lunch<br>
+                            ☆ Sipiso-piso Waterfall<br>
+                            ☆ Check in di Sitongging<br>
+                            ☆ Dinner<br>
+                            ☆ Back to hotel
+                        </div>
+
+                        <div style="margin-bottom:15px;">
+                            <b>DAY 3</b><br>
+                            ☆ Breakfast<br>
+                            ☆ Check out hotel<br>
+                            ☆ Desa Paepira (Naik Perahu Di Danau Toba)<br>
+                            ☆ Loken Barn<br>
+                            ☆ Sarune Cafe Lavender<br>
+                            ☆ Lunch<br>
+                            ☆ Hot Spring Sidebuk-debuk (Optional Tour)<br>
+                            ☆ Check in Berastagi<br>
+                            ☆ Dinner<br>
+                            ☆ Back to Hotel
+                        </div>
+
+                        <div style="margin-bottom:15px;">
+                            <b>DAY 4</b><br>
+                            ☆ Breakfast<br>
+                            ☆ Check out Hotel<br>
+                            ☆ Pasar Buah Berastagi<br>
+                            ☆ Visit Sinabung View<br>
+                            ☆ Langkat Eternal Pool<br>
+                            ☆ Lunch<br>
+                            ☆ On The Way To Medan<br>
+                            ☆ Maimoon Palace (Malay's clothing personal expense)<br>
+                            ☆ Check In Hotel di Medan<br>
+                            ☆ Dinner<br>
+                            ☆ Back To Hotel
+                        </div>
+
+                        <div style="margin-bottom:8px;">
+                            <b>DAY 5</b><br>
+                            ☆ Breakfast<br>
+                            ☆ Check out hotel<br>
+                            ☆ Masjid Raya<br>
+                            ☆ Shopping Oleh-oleh (Kain, Souvenir & Bolu Meranti/Zulaikha)<br>
+                            ☆ Lunch<br>
+                            ☆ On The Way to the Airport<br>
+                            ☆ TOUR FINISHED
+                        </div>
+                    </div>
+                `,
+                card_toba_list: "",
+                
+// --- PAKET 2: TOBA 4H3M ---
+card_tobadua_title: "Tour Medan/Danau Toba 4 Hari 3 Malam MEDAN/LAKE TOBA TOUR PACKAGE 4 DAYS 3 NIGHTS", 
+card_tobadua_desc: "Paket wisata ringkas namun padat menikmati keindahan Danau Toba.",
+card_tobadua_full_desc: `
+    MEDAN / LAKE TOBA TOUR PACKAGE 4 DAYS 3 NIGHTS
+    <br><br>
+    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 1</b><br>
+            ☆ Pickup Airport Kualanamu (Disarankan pagi)<br>
+            ☆ Breakfast dekat kawasan airport<br>
+            ☆ Ladang teh Sidamanik<br>
+            ☆ Bah Damanik<br>
+            ☆ Cruise to Samosir<br>
+            ☆ Visit Huta Siallagan (Rumah Adat Batak Toba)<br>
+            ☆ Check in di Samosir<br>
+            ☆ Dinner<br>
+            ☆ Back To Hotel
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 2</b><br>
+            ☆ Breakfast at Hotel<br>
+            ☆ Check Out Hotel<br>
+            ☆ Batu Pasa<br>
+            ☆ Waterfront Pangururan<br>
+            ☆ Ponggol Bridge<br>
+            ☆ Bukit Holbung<br>
+            ☆ Air Terjun Efrata<br>
+            ☆ Check in di Sitongging<br>
+            ☆ Dinner
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 3</b><br>
+            ☆ Breakfast at Hotel<br>
+            ☆ Check Out Hotel<br>
+            ☆ Air Terjun Sipiso-piso<br>
+            ☆ Desa Paepira (Naik Perahu Di Danau Toba)<br>
+            ☆ Loken Barn<br>
+            ☆ Lunch<br>
+            ☆ Sarune Cafe Lavender<br>
+            ☆ Check in Berastagi<br>
+            ☆ Dinner<br>
+            ☆ Back to Hotel
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 4</b><br>
+            ☆ Breakfast at Hotel<br>
+            ☆ Check Out Hotel<br>
+            ☆ Pasar Buah Berastagi<br>
+            ☆ On The Way To Medan<br>
+            ☆ Medan City Tour<br>
+            ☆ Lunch<br>
+            ☆ Shopping Oleh-oleh (Souvenir & Bolu Meranti)<br>
+            ☆ On The Way to Airport<br>
+            ☆ TOUR FINISHED
+        </div>
+    </div>
+`,
+card_tobadua_list: "",
+
+// --- PAKET 3: TOBA 3H2M (UPDATED) ---
+card_tobatiga_title: "Tour Medan/Danau Toba 3 Hari 2 Malam MEDAN/LAKE TOBA TOUR PACKAGE 3 DAYS 2 NIGHTS", 
+card_tobatiga_desc: "Paket wisata padat mengunjungi Samosir, Air Terjun Efrata, dan Berastagi.",
+card_tobatiga_full_desc: `
+    MEDAN / LAKE TOBA TOUR PACKAGE 3 DAYS 2 NIGHTS
+    <br><br>
+    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 1</b><br>
+            ☆ Pickup Airport Kualanamu (Disarankan pagi sampai airport)<br>
+            ☆ Breakfast dekat Kawasan Airport<br>
+            ☆ Ladang Teh Sidamanik<br>
+            ☆ Bah Damanik<br>
+            ☆ Lunch<br>
+            ☆ Cruise to Samosir<br>
+            ☆ Visit Huta Siallagan (Rumah Adat Batak Toba)<br>
+            ☆ Check in di Samosir<br>
+            ☆ Dinner
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 2</b><br>
+            ☆ Breakfast at Hotel<br>
+            ☆ Check out Hotel<br>
+            ☆ Bukit Holbung<br>
+            ☆ Air Terjun Efrata<br>
+            ☆ Lunch<br>
+            ☆ Air Terjun Sipiso-piso<br>
+            ☆ Check in Hotel Berastagi<br>
+            ☆ Dinner
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 3</b><br>
+            ☆ Breakfast at Hotel<br>
+            ☆ Check out Hotel<br>
+            ☆ Sarune Cafe (Bunga Lavender View Gunung Sinabung)<br>
+            ☆ Pasar Buah Berastagi<br>
+            ☆ Medan City Tour<br>
+            ☆ Lunch<br>
+            ☆ Shopping Oleh-oleh (Souvenir & Cake Bolu Meranti)<br>
+            ☆ On The way To Airport<br>
+            ☆ TOUR FINISHED
+        </div>
+    </div>
+`,
+card_tobatiga_list: "",
+
+// --- PAKET 4: TOBA 3H2M (UPDATED) ---
+card_tobaempat_title: "ONE DAY TRIP SAMOSIR/LAKE TOBA Day 1 (MEDAN/KNO AIRPORT – SAMOSIR/LAKE TOBA)", 
+card_tobaempat_desc: "Nikmati perjalanan singkat namun berkesan menjelajahi keindahan Danau Toba dan Pulau Samosir dalam satu hari penuh.",
+card_tobaempat_full_desc: `
+One Day Trip Danau Toba/ Samosir
+    <br><br>
+    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 1</b><br>
+            ☆ Pickup at Airport or Medan City<br>
+            ☆ On way to Samosir via Tele<br>
+            ☆ Visit Holbung Hill<br>
+            ☆ Visit Efrata Waterfall<br>
+            ☆ Visit Tele Tower View<br>
+            ☆ Lunch<br>
+            ☆ On way Back Medan City<br>
+            ☆ TOUR FINISHED<br>
+        </div>
+    </div>
+`,
+card_tobaempat_list: "",
+
+// --- PAKET 5: TOBA 3H2MO (UPDATED) ---
+card_tobalima_title: "ONE DAY TRIP BERASTAGI Day 1 (MEDAN/KNO AIRPORT – BERASTAGI)", 
+card_tobalima_desc: "Perjalanan dimulai dengan penjemputan di Bandara KNO atau Kota Medan, kemudian melanjutkan perjalanan menuju Berastagi, kota wisata berhawa sejuk di dataran tinggi Karo.",
+card_tobalima_full_desc: `
+One Day Trip Berastagi
+    <br><br>
+    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 1</b><br>
+            ☆ Pickup at Airport or Medan City<br>
+            ☆ On way to Berastagi<br>
+            ☆ Visit Holbung Hill<br>
+            ☆ Sipiso-piso Waterfall<br>
+            ☆ Lunch<br>
+            ☆ View Sinabung<br>
+            ☆ Visit Lumbini Park (Pagoda)<br>
+            ☆ TOUR FINISHED<br>
+        </div>
+    </div>
+`,
+card_tobalima_list: "",
+
+// --- PAKET 6: TOBA 3H2ML (UPDATED) ---
+card_tobaenam_title: "ONE DAY TRIP MEDAN Day 1 (MEDAN CITY TOUR)", 
+card_tobaenam_desc: "Jelajahi pesona Kota Medan dalam satu hari penuh yang kaya akan sejarah, budaya, dan kuliner khas.",
+card_tobaenam_full_desc: `
+One Day Trip Medan
+    <br><br>
+    <div style="background:#f1f5f9; padding:15px; border-radius:10px; border:1px solid #cbd5e1;">
+        <h4 style="margin-bottom:10px; color:#0F172A;">🗓️ Rencana Perjalanan:</h4>
+
+        <div style="margin-bottom:15px;">
+            <b>DAY 1</b><br>
+            ☆ Pickup at Airport or Medan City<br>
+            ☆ Visit Maimoon Palace<br>
+            ☆ Visit Raya Mosque<br>
+            ☆ Visit Tjong Afie<br>
+            ☆ Lunch at Local Restaurant<br>
+            ☆ Visit Visit Ucok Durian<br>
+            ☆ On way Back Hotel<br>
+            ☆ TOUR FINISHED<br>
+        </div>
+    </div>
+`,
+card_tobaenam_list: "",
+                
+                
+                // KENDARAAN (Update Deskripsi dengan Harga)
+                car_innova_title: "Innova Reborn", 
+                car_innova_desc: "MPV Premium dengan suspensi empuk & kabin senyap. Cocok untuk eksekutif & keluarga.",
+                car_innova_list: "",
+                
+                car_hiace_title: "Toyota Hiace Commuter", 
+                car_hiace_desc: "Commuter van legendaris. Kabin luas, AC dingin merata, solusi hemat untuk rombongan 14 orang.",
+                car_hiace_list: "",
+                
+                car_avanza_title: "All New Avanza", 
+                car_avanza_desc: "MPV sejuta umat. Irit BBM, bertenaga, dan lincah bermanuver di segala medan.",
+                car_avanza_list: "",
+                
+                // BUS
+                bus_elf_title: "Isuzu Elf Long (19 Seat)", 
+                bus_elf_desc: "Minibus sasis panjang kapasitas 19 orang. Tangguh di tanjakan, cocok untuk wisata rombongan besar.",
+                bus_elf_list: "",
+                
+                bus_premio_title: "Hiace Premio Luxury", 
+                bus_premio_desc: "Varian mewah dari Hiace. Desain modern, ruang kaki lega, dan kenyamanan setara sedan kelas atas.",
+                bus_premio_list: "",
+                
+                bus_medium_title: "Medium Bus Pariwisata", 
+                bus_medium_desc: "Bus wisata medium dengan fasilitas Full AC, TV, & Karaoke. Bagasi luas untuk oleh-oleh Anda.",
+                bus_medium_list: ""
+            },
+            en: {
+                nav_home: "Home", nav_packages: "Tour Packages", nav_rental: "Car Rental", nav_bus: "Tourist Bus", nav_about: "About Us", nav_contact: "Contact", nav_status: "Check Order",
+                hero_title: "Explore the World with <br>Daulay_TravelMedan", hero_subtitle: "Your premium travel partner. Providing best tour packages, comfortable fleet, and unforgettable adventures.",
+                btn_view_packages: "View Packages", btn_consult: "Trip Consultation",
+                title_destinations: "Popular Destinations", subtitle_destinations: "Curated tour packages for your best holiday experience.",
+                btn_detail: "View Detail & Book",
+                title_fleet: "Premium Fleet", subtitle_fleet: "Clean, well-maintained vehicles with experienced drivers ready to serve you.",
+                title_bus: "Rent Mini Bus & Big Bus", subtitle_bus: "Group travel solutions with the newest, cleanest, and most comfortable bus fleet.",
+                title_about: "About Us", about_summary: "Daulay_TravelMedan since 2018. Serving thousands of tourists wholeheartedly.", btn_read_more: "Read More",
+                title_contact: "Contact Us", label_address: "Address", label_phone: "Phone / WA", ph_name: "Full Name", ph_email: "Email Address", ph_message: "Your Message...", btn_send_msg: "Send Message",
+                modal_title_detail: "Package Detail", text_facilities: "Facilities Included:", text_note: "Note:", text_price_note: "Prices may change at any time (High Season/Holidays).",
+                form_title: "Booking Form", text_product: "Product:", text_price: "Price:", text_included: "Included:", label_name: "Full Name", label_wa: "WhatsApp Number", ph_wa: "Ex: +628123456789", label_email: "Email", label_date: "Planning Date", label_note: "Additional Notes", ph_note: "Number of people, pickup time, etc...", btn_back: "Back", btn_send: "Submit Order",
+                about_title: "Our Journey Story", about_subtitle: "Serving with Heart Since 2018", about_p1: "Daulay_TravelMedan was established in 2018 in the heart of Berastagi...", about_p2: "For over a decade, we have grown to become a trusted travel partner...", about_vision: "Vision & Mission", about_vm1: "Becoming the leading tourism service provider in North Sumatra.", about_vm2: "Providing excellent service with safety standards.", about_vm3: "Providing clean and legal transportation fleets.", about_vm4: "Offering competitive prices.", about_why: "Why Choose Us?", about_why_desc: "We have a team of experienced drivers and guides...",
+                btn_contact_us: "Contact Us Now", btn_direct_book: "Direct Book", chat_status: "Online • Ready to Help", chat_welcome: "Hello! Welcome to Daulay_TravelMedan. How can we help you today?", ph_chat: "Type a message...",
+                // STATUS CHECK
+                status_title: "Check Order Status", status_desc: "Enter the WhatsApp number you used when booking.", status_placeholder: "0812345...", status_btn: "Check",
+                // REVIEWS
+                title_reviews: "What They Say", subtitle_reviews: "Honest experiences from Daulay_TravelMedan loyal customers.",
+                // PRODUCTS
+                card_toba_title: "Exotic Lake Toba", card_toba_desc: "Enjoy the beauty of the largest volcanic lake with premium accommodation.",
+                card_toba_full_desc: "Explore the magic of Lake Toba, Samosir Island, and Bukit Simarjarunjung on a delightful 3-day trip.",
+                card_toba_list: "",
+                card_tobadua_title: "Cool Berastagi", card_tobadua_desc: "Fruit picking tour, traditional market, and natural hot springs.",
+                card_tobadua_full_desc: "Enjoy the cool mountain air of Berastagi, visit the Fruit Market, Gundaling, and Sipiso-piso Waterfall.",
+                card_tobadua_list: "",
+                card_tobatiga_title: "Medan Heritage", card_tobatiga_desc: "Explore Maimun Palace, city history, and durian culinary tour.",
+                card_tobatiga_full_desc: "Tour around Medan city visiting historical buildings and tasting legendary Medan culinary delights.",
+                card_tobatiga_list: "",
+                car_innova_title: "Innova Reborn", car_innova_desc: "Innova Reborn is the best choice for family comfort. Soft suspension, quiet cabin, and spacious trunk.",
+                car_innova_list: "",
+                car_hiace_title: "Toyota Hiace", car_hiace_desc: "Perfect solution for groups. Toyota Hiace offers a very spacious cabin with a high roof.",
+                car_hiace_list: "",
+                car_avanza_title: "All New Avanza", car_avanza_desc: "Economical vehicle that is tough and agile for city or out-of-town trips.",
+                car_avanza_list: "",
+                
+                // BUS RENTAL
+                bus_elf_title: "Isuzu Elf Long", bus_elf_desc: "19 seat capacity. Economical choice for large family groups.",
+                bus_elf_full_desc: "Tough minibus with plenty of cargo capacity. Very suitable for large family trips or small groups.",
+                bus_elf_list: "",
+                bus_premio_title: "Hiace Premio Luxury", bus_premio_desc: "VIP comfort with spacious cabin and soft suspension. 14 Seats.",
+                bus_premio_full_desc: "Upgrade your trip with Hiace Premio. Modern design, quieter cabin, and sedan-like suspension comfort.",
+                bus_premio_list: "",
+                bus_medium_title: "Medium Tour Bus", bus_medium_desc: "Tourism bus 29-35 seats. Complete facilities for tour groups.",
+                bus_medium_full_desc: "Medium-sized bus that is agile maneuvering on Sumatran roads. Suitable for office gatherings or study tours.",
+                bus_medium_list: ""
+            },
+            // ... (Kode bahasa lain disingkat agar muat, Anda bisa menambahkan kembali bahasa zh, ja, es, fr, de dari kode sebelumnya di sini jika diperlukan) ...
+        };
+
+        window.changeLanguage = function(lang) {
+            // Fallback ke EN jika bahasa tidak ditemukan penuh (untuk demo ini)
+            const selectedLang = translations[lang] ? translations[lang] : translations['en'];
+
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (selectedLang[key]) {
+                    el.innerHTML = selectedLang[key]; 
+                }
+            });
+
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (selectedLang[key]) {
+                    el.placeholder = selectedLang[key];
+                }
+            });
+
+            // UPDATE MODAL CONTENT IF OPEN
+            if(document.getElementById("detailModal").style.display === "block") {
+                updateModalContent(lang);
+            }
+        };
+
+        // --- 3. LOGIKA UI & INTERAKSI (UPDATED) ---
+        
+        window.toggleMenu = function() {
+            const navLinks = document.getElementById('navLinks');
+            const closeBtn = document.getElementById('mobileCloseBtn');
+            
+            navLinks.classList.toggle('active');
+            
+            // Tampilkan tombol close hanya saat menu aktif di mobile
+            if(window.innerWidth <= 960) {
+                if(navLinks.classList.contains('active')) {
+                    closeBtn.style.display = "block";
+                } else {
+                    closeBtn.style.display = "none";
+                }
+            }
+        }
+
+        // Logic Header berubah warna saat scroll
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // --- CUSTOM NOTIFICATION FUNCTION ---
+        window.showCustomAlert = function(title, message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const toast = document.createElement('div');
+            
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+
+            toast.className = `toast-card ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fas ${icon}"></i></div>
+                <div class="toast-content">
+                    <span class="toast-title">${title}</span>
+                    <span class="toast-message">${message}</span>
+                </div>
+                <div class="toast-close" onclick="this.parentElement.remove()">&times;</div>
+            `;
+
+            container.appendChild(toast);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 4000);
+        }
+
+
+        // --- UNIVERSAL FULL SCREEN MODAL LOGIC ---
+        const modal = document.getElementById("detailModal");
+        const detailButtons = document.querySelectorAll(".view-detail");
+        
+        const detailView = document.getElementById("detailView");
+        const bookingForm = document.getElementById("bookingForm");
+        const statusView = document.getElementById("statusView");
+        const aboutView = document.getElementById("aboutView"); 
+        const modalActionFooter = document.getElementById("modalActionFooter");
+        const dbForm = document.getElementById("dbBookingForm");
+        const btnSubmitDB = document.getElementById("btnSubmitDB");
+        
+        let currentBookingMode = 'web'; 
+        
+        // Variables to store current product keys for dynamic translation
+        let currentNameKey = "";
+        let currentDescKey = "";
+        let currentListKey = "";
+        let currentPrice = "";
+        let currentImg = "";
+        let currentType = ""; // Store type to check car vs tour
+
+        // Event Listener untuk Tombol Detail Produk
+        detailButtons.forEach(btn => {
+            btn.addEventListener("click", function() {
+                // Simpan kunci ke variabel global
+                currentNameKey = this.getAttribute("data-name-key");
+                currentDescKey = this.getAttribute("data-desc-key");
+                currentListKey = this.getAttribute("data-list-key");
+                currentPrice = this.getAttribute("data-price");
+                currentImg = this.getAttribute("data-img");
+                currentType = this.getAttribute("data-type"); // Get type
+                
+                const currentLang = document.querySelector('.lang-select').value;
+                updateModalContent(currentLang);
+
+                window.showDetailView();
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden"; 
+            });
+        });
+
+        // Function to update WA link dynamically from Select dropdown
+        window.updateWaLinkFromSelect = function() {
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            const productName = selectedLang[currentNameKey];
+            
+            // Get selected transmission
+            const transSelect = document.getElementById("modalTransmission");
+            const transValue = transSelect.value;
+            
+            let message = `Halo Admin Daulay_TravelMedan,%0A%0ASaya ingin sewa: *${productName}*.%0ATransmisi: *${transValue}*.%0AHarga di Website: *${currentPrice}*.%0A%0AApakah unit tersedia untuk tanggal rencana saya?`;
+            
+            document.getElementById("waLink").href = `https://wa.me/6282276368335?text=${message}`;
+        }
+
+        function updateModalContent(lang) {
+            const selectedLang = translations[lang] ? translations[lang] : translations['en'];
+
+            // Update Modal Data based on Keys and Language
+            if(currentNameKey && selectedLang[currentNameKey]) {
+                document.getElementById("modalName").innerText = selectedLang[currentNameKey];
+                document.getElementById("formProductName").innerText = selectedLang[currentNameKey];
+                
+                let productName = selectedLang[currentNameKey];
+                let message = "";
+
+                // Logic to differentiate message based on whether price exists
+                if (currentPrice && currentPrice.includes("Rp")) {
+                    // Case for Car/Bus Rental AND Tour Packages (Now that prices are added)
+                    message = `Halo Admin Daulay_TravelMedan,%0A%0ASaya tertarik dengan produk: *${productName}*.%0AHarga di Website: *${currentPrice}*.%0A%0AApakah tersedia untuk tanggal rencana saya?`;
+                } else {
+                    // Fallback
+                    message = `Halo Admin Daulay_TravelMedan,%0A%0ASaya tertarik dengan paket: *${productName}*.%0A%0AMohon info harga detail dan ketersediaannya.`;
+                }
+
+                document.getElementById("waLink").href = `https://wa.me/6282276368335?text=${message}`;
+            }
+            if(currentDescKey && selectedLang[currentDescKey]) document.getElementById("modalDesc").innerHTML = selectedLang[currentDescKey]; // Pakai innerHTML agar tag <br> terbaca
+            
+            if(currentImg) document.getElementById("modalImg").src = currentImg;
+
+            // Render Features List
+            if(currentListKey && selectedLang[currentListKey]) {
+                const listContainer = document.getElementById("modalList");
+                const formList = document.getElementById("formFeaturesList");
+                if(listContainer) listContainer.innerHTML = ""; 
+                if(formList) formList.innerHTML = "";
+
+                const listData = selectedLang[currentListKey];
+                if (listData) {
+                    const items = listData.split('|');
+                    items.forEach(item => {
+                        // Modal List
+                        if(listContainer) {
+                            const li = document.createElement("li");
+                            li.innerHTML = `<i class="fas fa-check"></i> ${item}`;
+                            listContainer.appendChild(li);
+                        }
+                        
+                        // Form List
+                        if(formList) {
+                            const liForm = document.createElement("li");
+                            liForm.innerText = item;
+                            formList.appendChild(liForm);
+                        }
+                    });
+                }
+            }
+            
+            // Update Modal Title (Dynamic based on mode)
+            if(document.getElementById("modalTitle").innerText !== selectedLang.title_about) {
+                 if (currentBookingMode === 'direct') {
+                    // REMOVED DIRECT MODE TITLE LOGIC AS BUTTON IS GONE
+                } else if (currentBookingMode === 'web') {
+                    document.getElementById("modalTitle").innerText = selectedLang.form_title; 
+                    document.getElementById("formHeaderTitle").innerText = selectedLang.form_title;
+                } else if (currentBookingMode === 'status') {
+                      document.getElementById("modalTitle").innerText = selectedLang.status_title;
+                } else {
+                    document.getElementById("modalTitle").innerText = selectedLang.modal_title_detail;
+                }
+            }
+        }
+
+        window.showDetailView = function() {
+            currentBookingMode = 'detail';
+            detailView.style.display = "block";
+            bookingForm.style.display = "none";
+            aboutView.style.display = "none"; 
+            statusView.style.display = "none";
+            modalActionFooter.style.display = "grid"; 
+            
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            document.getElementById("modalTitle").innerText = selectedLang.modal_title_detail;
+        }
+
+        window.showBookingForm = function(mode) {
+            currentBookingMode = mode;
+            detailView.style.display = "none";
+            aboutView.style.display = "none"; 
+            statusView.style.display = "none";
+            bookingForm.style.display = "block";
+            modalActionFooter.style.display = "none";
+            
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            updateModalContent(currentLang); 
+
+            if(mode === 'direct') {
+               // DIRECT MODE REMOVED
+            } else {
+                document.getElementById("modalTitle").innerText = selectedLang.form_title; 
+                document.getElementById("formHeaderTitle").innerText = selectedLang.form_title;
+                btnSubmitDB.className = "btn btn-web";
+                btnSubmitDB.style.flex = "2";
+            }
+        }
+
+        window.openAbout = function() {
+            detailView.style.display = "none";
+            bookingForm.style.display = "none";
+            statusView.style.display = "none";
+            aboutView.style.display = "block"; 
+            modalActionFooter.style.display = "none";
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            document.getElementById("modalTitle").innerText = selectedLang.title_about;
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+        
+        window.showStatusModal = function() {
+            currentBookingMode = 'status';
+            detailView.style.display = "none";
+            bookingForm.style.display = "none";
+            aboutView.style.display = "none";
+            statusView.style.display = "block";
+            modalActionFooter.style.display = "none";
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            document.getElementById("modalTitle").innerText = selectedLang.status_title;
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+        
+        window.checkStatus = async function() {
+            const wa = document.getElementById("statusInpWa").value;
+            const container = document.getElementById("statusResultContainer");
+            
+            if(!wa) {
+                window.showCustomAlert('Info', 'Masukkan nomor WhatsApp Anda.', 'info');
+                return;
+            }
+            
+            container.innerHTML = '<div style="text-align:center; padding:20px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+            
+            try {
+                const q = query(collection(db, "pesanan_travel"), where("whatsapp", "==", wa));
+                const querySnapshot = await getDocs(q);
+                
+                container.innerHTML = "";
+                
+                let directHTML = '';
+                let webHTML = '';
+                let hasDirect = false;
+                let hasWeb = false;
+
+                if(querySnapshot.empty) {
+                      container.innerHTML = '<div style="text-align:center; padding:20px; color:#64748B;">Tidak ada pesanan ditemukan dengan nomor ini.</div>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        let badgeClass = 'pending';
+                        if(data.status === 'Konfirmasi' || data.status === 'Diterima') badgeClass = 'confirmed';
+                        if(data.status === 'Ditolak') badgeClass = 'rejected';
+                        
+                        let dateStr = data.tanggal_rencana || '-';
+                        
+                        const cardHTML = `
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <span class="order-date"><i class="far fa-calendar-alt"></i> ${dateStr}</span>
+                                    <span class="status-badge ${badgeClass}">${data.status}</span>
+                                </div>
+                                <div class="order-product">${data.produk}</div>
+                                <div class="order-price">${data.harga}</div>
+                                <div style="margin-top:5px; font-size:0.9rem; color:#64748B;">
+                                    <i class="fas fa-user"></i> ${data.nama_pemesan}
+                                </div>
+                            </div>
+                        `;
+
+                        if (data.sumber === 'Pesan Langsung') {
+                            directHTML += cardHTML;
+                            hasDirect = true;
+                        } else {
+                            webHTML += cardHTML;
+                            hasWeb = true;
+                        }
+                    });
+
+                    if (hasDirect) {
+                        container.innerHTML += `
+                            <div class="status-section-header" style="color:var(--wa-color);">
+                                <i class="fab fa-whatsapp"></i> Pesan Langsung
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:10px;">${directHTML}</div>
+                        `;
+                    }
+
+                    if (hasWeb) {
+                        container.innerHTML += `
+                            <div class="status-section-header" style="color:var(--primary);">
+                                <i class="fas fa-globe"></i> Booking Website
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:10px;">${webHTML}</div>
+                        `;
+                    }
+                }
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--error);">Gagal mengambil data. Coba lagi nanti.</div>';
+            }
+        }
+
+        window.closeModal = function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; 
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                window.closeModal();
+            }
+        }
+
+        dbForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const originalBtnText = btnSubmitDB.innerHTML;
+            btnSubmitDB.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...';
+            btnSubmitDB.disabled = true;
+
+            const name = document.getElementById("inpName").value;
+            const wa = document.getElementById("inpWa").value;
+            const email = document.getElementById("inpEmail").value;
+            const date = document.getElementById("inpDate").value;
+            const note = document.getElementById("inpNote").value;
+            const product = document.getElementById("formProductName").innerText;
+            const price = currentPrice; // Price taken from current global var
+            
+            // Get Transmission if Car
+            let trans = "";
+            if (currentType === 'car') {
+                trans = " (" + document.getElementById("modalTransmission").value + ")";
+            }
+            
+            const sourceLabel = currentBookingMode === 'direct' ? 'Pesan Langsung' : 'Website Booking';
+
+            try {
+                await addDoc(collection(db, "pesanan_travel"), {
+                    sumber: sourceLabel,
+                    nama_pemesan: name, whatsapp: wa, email: email, tanggal_rencana: date, catatan: note,
+                    produk: product + trans, // Append transmission to product name in DB
+                    harga: price, status: "Menunggu Konfirmasi", dibuat_pada: serverTimestamp()
+                });
+                
+                window.showCustomAlert('Berhasil!', `Terima kasih ${name}, pesanan Anda telah diterima.`, 'success');
+                
+                window.closeModal();
+                dbForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                window.showCustomAlert('Gagal Mengirim', 'Terjadi kesalahan sistem. Silakan coba lagi nanti.', 'error');
+            } finally {
+                btnSubmitDB.innerHTML = originalBtnText;
+                btnSubmitDB.disabled = false;
+            }
+        });
+
+        // --- CHAT LOGIC ---
+        let chatSessionId = localStorage.getItem('chatSessionId');
+        if (!chatSessionId) {
+            chatSessionId = 'sess_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('chatSessionId', chatSessionId);
+        }
+
+        const chatWidget = document.getElementById('chatWidget');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        window.toggleChatWidget = function() {
+            if (chatWidget.style.display === 'flex') {
+                chatWidget.style.display = 'none';
+            } else {
+                chatWidget.style.display = 'flex';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        chatForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+            chatInput.value = '';
+            try {
+                await addDoc(collection(db, "live_chat_messages"), {
+                    sessionId: chatSessionId, text: text, sender: 'user', timestamp: serverTimestamp(), isRead: false 
+                });
+            } catch (error) { console.error(error); }
+        });
+
+        const qChat = query(
+            collection(db, "live_chat_messages"), 
+            where("sessionId", "==", chatSessionId),
+            orderBy("timestamp", "asc")
+        );
+        
+        onSnapshot(qChat, (snapshot) => {
+            chatMessages.innerHTML = ''; 
+            const currentLang = document.querySelector('.lang-select').value;
+            const selectedLang = translations[currentLang] ? translations[currentLang] : translations['en'];
+            const welcomeMsg = selectedLang.chat_welcome;
+            
+            const defaultMsg = document.createElement('div');
+            defaultMsg.className = 'message-bubble msg-in';
+            defaultMsg.innerHTML = `${welcomeMsg}<span class="msg-time">Auto</span>`;
+            chatMessages.appendChild(defaultMsg);
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const msgDiv = document.createElement('div');
+                const bubbleClass = data.sender === 'user' ? 'msg-out' : 'msg-in';
+                let timeStr = '...';
+                if(data.timestamp) {
+                    const dateObj = data.timestamp.toDate();
+                    timeStr = dateObj.getHours() + ':' + String(dateObj.getMinutes()).padStart(2, '0');
+                }
+                msgDiv.className = `message-bubble ${bubbleClass}`;
+                msgDiv.innerHTML = `${data.text}<span class="msg-time">${timeStr}</span>`;
+                chatMessages.appendChild(msgDiv);
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        // --- LOGIKA RATING & ULASAN ---
+        
+        const reviewModal = document.getElementById('reviewModal');
+        let selectedRating = 0;
+
+        // 1. Fungsi Buka/Tutup Modal (Harus di-assign ke window karena module)
+        window.openReviewModal = function() {
+            reviewModal.style.display = "block";
+        }
+
+        window.closeReviewModal = function() {
+            reviewModal.style.display = "none";
+            document.getElementById('reviewForm').reset();
+            resetStars();
+        }
+
+        // 2. Logika Klik Bintang
+        window.setRating = function(val) {
+            selectedRating = val;
+            document.getElementById('inpRatingValue').value = val;
+            
+            // Update visual bintang
+            const stars = document.querySelectorAll('#starInputGroup i');
+            stars.forEach(star => {
+                const starVal = parseInt(star.getAttribute('data-value'));
+                if (starVal <= val) {
+                    star.style.color = "#F59E0B"; // Kuning
+                } else {
+                    star.style.color = "#e2e8f0"; // Abu
+                }
+            });
+        }
+
+        function resetStars() {
+            selectedRating = 0;
+            const stars = document.querySelectorAll('#starInputGroup i');
+            stars.forEach(s => s.style.color = "#e2e8f0");
+        }
+
+        // 3. Submit Ulasan ke Firestore
+        const reviewForm = document.getElementById('reviewForm');
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if(selectedRating === 0) {
+                window.showCustomAlert('Rating Kosong', 'Silakan pilih jumlah bintang.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('btnSubmitReview');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            btn.disabled = true;
+
+            const name = document.getElementById('inpReviewName').value;
+            const text = document.getElementById('inpReviewText').value;
+
+            try {
+                await addDoc(collection(db, "ulasan_travel"), {
+                    nama: name,
+                    rating: parseInt(selectedRating),
+                    ulasan: text,
+                    tanggal: serverTimestamp()
+                });
+
+                window.showCustomAlert('Terima Kasih!', 'Ulasan Anda berhasil diterbitkan.', 'success');
+                window.closeReviewModal();
+            } catch (error) {
+                console.error(error);
+                window.showCustomAlert('Error', 'Gagal mengirim ulasan.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // 4. Ambil Data Ulasan Real-time (Limit dinaikkan agar bisa mendeteksi > 10)
+        const qReviews = query(
+            collection(db, "ulasan_travel"), 
+            orderBy("tanggal", "desc"), 
+            limit(50) 
+        );
+
+        onSnapshot(qReviews, (snapshot) => {
+            const container = document.getElementById('reviewContainer');
+            
+            // LOGIKA BARU: Cek jika jumlah ulasan lebih dari 10
+            if (snapshot.size > 10) {
+                container.className = 'review-scroll-wrapper'; // Mode geser
+            } else {
+                container.className = 'review-grid'; // Mode grid biasa
+            }
+
+            if (snapshot.empty) {
+                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">Belum ada ulasan. Jadilah yang pertama!</div>';
+                // Reset class ke grid jika kosong agar pesan tampil rapi di tengah
+                container.className = 'review-grid'; 
+                return;
+            }
+
+            let html = '';
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const initial = data.nama ? data.nama.charAt(0).toUpperCase() : 'A';
+                
+                // Generate bintang kuning
+                let starsHtml = '';
+                for(let i=1; i<=5; i++) {
+                    if(i <= data.rating) starsHtml += '<i class="fas fa-star"></i>';
+                    else starsHtml += '<i class="far fa-star" style="opacity:0.3"></i>';
+                }
+
+                html += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">${initial}</div>
+                            <div class="review-info">
+                                <h4>${data.nama}</h4>
+                                <span>Pelanggan Terverifikasi</span>
+                            </div>
+                        </div>
+                        <div class="star-display">${starsHtml}</div>
+                        <p class="review-text">"${data.ulasan}"</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        });
+
+    </script>
+</body>
+</html>
